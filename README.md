@@ -1,1 +1,2 @@
-# Projet_vr_equipe_10
+# FPS en réalité virtuelle
+## Jolan Thomassin, Clément Darne, Manoël Nohra

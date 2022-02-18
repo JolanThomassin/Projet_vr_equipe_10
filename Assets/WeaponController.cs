@@ -7,7 +7,7 @@ public class WeaponController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FireRange = 50.0f;
+        FireRange = 10.0f;
     }
 
     // Update is called once per frame

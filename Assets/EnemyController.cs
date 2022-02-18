@@ -73,7 +73,7 @@ public class EnemyController : MonoBehaviour
     private WeaponController _weapon;
     
     public int Health { get; set; }
-    private float _visionRange = 100.0f;
+    private float _visionRange = 20.0f;
 
     private bool _isSeeking;
 

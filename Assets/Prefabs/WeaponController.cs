@@ -15,6 +15,7 @@ public class WeaponController : MonoBehaviour
     {
 
     }
+
     public float FireRange { get; set; }
 
 
@@ -26,4 +27,5 @@ public class WeaponController : MonoBehaviour
 
     private float _fireRate = 1.0f;
     private float _damage = 1.0f;
+
 }

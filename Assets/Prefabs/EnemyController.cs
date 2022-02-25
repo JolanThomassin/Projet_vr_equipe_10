@@ -12,7 +12,6 @@ public class EnemyController : MonoBehaviour
         _weapon = gameObject.GetComponentInChildren<WeaponController>();
         if (_weapon == null)
             Debug.LogWarning("Enemy: No weapon!");
-        else Debug.Log("Enemy fire range: " + _weapon.FireRange);
 
         // Find player
         _playerTransform = GameObject.FindWithTag("Player")?.transform;
@@ -44,6 +43,7 @@ public class EnemyController : MonoBehaviour
         // Ray between the enemy and the player
         Ray ray = new Ray(position, playerPosition - position);
         
+        // FIXME: I think the raycast does not ignore the enemy itself
         var mask = ~(1 << LayerMask.NameToLayer("Ignore Raycast"));
 
         if (Physics.Raycast(ray, out var hitInfo, _visionRange, mask))
@@ -55,13 +55,13 @@ public class EnemyController : MonoBehaviour
         else
         {
             // Player not found, still seeking
-            return false;
+            return true;
         }
     }
 
     void Seek()
     {
-
+        Debug.Log("Enemy: Seek!");
     }
 
     void Attack()
@@ -75,7 +75,7 @@ public class EnemyController : MonoBehaviour
     public int Health { get; set; }
     private float _visionRange = 20.0f;
 
-    private bool _isSeeking;
+    private bool _isSeeking = true;
 
     // Player position
     private Transform _playerTransform;

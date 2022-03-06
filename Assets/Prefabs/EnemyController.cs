@@ -3,20 +3,63 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IDamageable
 {
+    private WeaponController _weapon;
+    private HealthBarController _healthBar;
+
+    private float _visionRange = 20.0f;
+
+    private bool _isSeeking = true;
+
+    // Player position
+    private Transform _playerTransform;
+
+    public int Health
+    {
+        // Health is stored in HealthBarController
+        get => _healthBar.Health;
+        set => _healthBar.Health = value;
+    }
+
+    public int MaxHealth
+    {
+        // Health is stored in HealthBarController
+        get => _healthBar.MaxHealth;
+        set => _healthBar.MaxHealth = value;
+    }
+
+    public int Heal(int amount)
+    {
+        Health += amount;
+        return Health;
+    }
+
+    public int Damage(int amount)
+    {
+        Health -= amount;
+        return Health;
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
-        Health = 20;
         _weapon = gameObject.GetComponentInChildren<WeaponController>();
         if (_weapon == null)
             Debug.LogWarning("Enemy: No weapon!");
+
+        _healthBar = gameObject.GetComponentInChildren<HealthBarController>();
+        if (_healthBar == null)
+            Debug.LogWarning("Enemy: No health bar!");
 
         // Find player
         _playerTransform = GameObject.FindWithTag("Player")?.transform;
         if (_playerTransform == null)
             Debug.LogWarning("Enemy: No player entity was found!");
+
+        Health = 200;
+        MaxHealth = 200;
     }
 
     // Update is called once per frame
@@ -32,10 +75,19 @@ public class EnemyController : MonoBehaviour
         {
             Attack();
         }
+
+        Health = 0;
+        //Damage(1);
     }
 
     private bool CheckIsSeeking()
     {
+        if (_playerTransform == null)
+        {
+            Debug.Assert(false, "No player!");
+            return true;
+        }
+
         // Positions of the enemy and the player
         Vector3 position = transform.position;
         Vector3 playerPosition = _playerTransform.position;
@@ -68,15 +120,4 @@ public class EnemyController : MonoBehaviour
     {
         Debug.Log("Enemy: Shoot!");
     }
-
-
-    private WeaponController _weapon;
-    
-    public int Health { get; set; }
-    private float _visionRange = 20.0f;
-
-    private bool _isSeeking = true;
-
-    // Player position
-    private Transform _playerTransform;
 }

@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class HealthBarController : MonoBehaviour
 {
+    private Camera _mainCamera;
+    private MeshRenderer _meshRenderer;
+    private MaterialPropertyBlock _materialPropertyBlock;
+
+    private void Awake()
+    {
+        _meshRenderer = GetComponent<MeshRenderer>();
+        _materialPropertyBlock = new MaterialPropertyBlock();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +27,10 @@ public class HealthBarController : MonoBehaviour
         AlignCamera();
         UpdateParams();
     }
+
+    public int Health { get; set; }
+    public int MaxHealth { get; set; }
+
 
     private void AlignCamera()
     {
@@ -33,13 +47,7 @@ public class HealthBarController : MonoBehaviour
     private void UpdateParams()
     {
         _meshRenderer.GetPropertyBlock(_materialPropertyBlock);
-        _materialPropertyBlock.SetFloat("_Fill", _damageable.Health / (float)_damageable.MaxHealth);
+        _materialPropertyBlock.SetFloat("_Fill", Health / (float)MaxHealth);
         _meshRenderer.SetPropertyBlock(_materialPropertyBlock);
     }
-
-
-    private Camera _mainCamera;
-    private Damageable _damageable;
-    private MeshRenderer _meshRenderer;
-    private MaterialPropertyBlock _materialPropertyBlock;
 }

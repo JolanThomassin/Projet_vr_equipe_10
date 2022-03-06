@@ -1,9 +1,10 @@
+// https://github.com/sinbad/UnityInstancedHealthBars
 Shader "UI/HealthBar" 
 {
     Properties 
     {
         _MainTex("Texture", 2D) = "white" {}
-        _Fill("Fill", float) = 0
+        _Fill("Fill", float) = 0.0
     }
 
     SubShader 

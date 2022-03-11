@@ -62,7 +62,13 @@ Shader "UI/HealthBar"
 
                 // generate UVs from fill level (assumed texture is clamped)
                 o.uv = v.uv;
-                o.uv.x += 0.5 - fill;
+                if (fill == 1.0)
+                    o.uv.x -= 0.6;      // 0.5 should normally suffire but it does not :)
+                else if (fill == 0.0)
+                    o.uv.x += 0.6;
+                else
+                    o.uv.x += 0.5 - fill;
+
                 return o;
             }
 

@@ -76,7 +76,7 @@ public class EnemyController : MonoBehaviour, IDamageable
             Attack();
         }
 
-        Health = 0;
+        //Health = 0;
         //Damage(1);
     }
 

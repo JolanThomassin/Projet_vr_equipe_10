@@ -1,5 +1,0 @@
-sceneSetups:
-- path: C:/Users/2201194/Desktop/Projet_vr_equipe_10-JolanThomassin-patch-1/Assets/Popopo.unity
-  isLoaded: 1
-  isActive: 1
-  isSubScene: 0

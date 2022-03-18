@@ -22,35 +22,37 @@ public class PlayerWeaponController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Start");
-
-        /*
-        List<InputDevice> inputDevices = new List<InputDevice>();
-        InputDeviceCharacteristics rigthChara = InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller;
-        InputDevices.GetDevicesWithCharacteristics(rigthChara, inputDevices);
-
-        foreach (var inputDevice in inputDevices)
-        {
-            Debug.Log(inputDevice.name + inputDevice.characteristics);
-        }
-
-        if (inputDevices.Count > 0)
-        {
-            _device = inputDevices[0];
-        }*/
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-
-       // _device.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue);
-        
-        if (Time.time >= _nextTimeToFire)
+        List<InputDevice> inputDevices;
+        if (_device != null)
         {
-            _nextTimeToFire = Time.time + 1/_fireRate;
-            Fire();
+            inputDevices = new List<InputDevice>();
+            InputDeviceCharacteristics rigthChara = InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Right;
+            InputDevices.GetDevicesWithCharacteristics(rigthChara, inputDevices);
+            foreach (var inputDevice in inputDevices)
+            {
+                Debug.Log(inputDevice.name + inputDevice.characteristics);
+            }
+
+            if (inputDevices.Count > 0)
+            {
+                _device = inputDevices[0];
+            }
+
+            _device.TryGetFeatureValue(CommonUsages.triggerButton, out bool triggerPressed);
+            
+            if (Time.time >= _nextTimeToFire && triggerPressed)
+            {
+                _nextTimeToFire = Time.time + 1/_fireRate;
+                Fire();
+            }
         }
+
     }
     private void LateUpdate()
     {

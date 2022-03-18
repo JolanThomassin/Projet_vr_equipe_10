@@ -59,8 +59,9 @@ public class PlayerWeaponController : MonoBehaviour
         {
             if (hit.collider.gameObject.CompareTag("Enemy"))
             {
-                GameObject bullet = (GameObject)Instantiate(projectile, this.transform);
-                bullet.GetComponent<Rigidbody>().velocity = hit.transform.position * 2.5f;
+                Transform weaponTransform = this.transform;
+                GameObject bullet = (GameObject)Instantiate(projectile, weaponTransform);
+                bullet.GetComponent<Rigidbody>().velocity = hit.transform.position * 1f;
                 Debug.Log("Fireeeeee");
             }
         }

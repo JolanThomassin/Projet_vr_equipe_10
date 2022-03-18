@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour, IDamageable
 {
-    private WeaponController _weapon;
+    private EnemyWeaponController _weapon;
     private HealthBarController _healthBar;
 
     private float _visionRange = 20.0f;
@@ -45,18 +45,18 @@ public class EnemyController : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        _weapon = gameObject.GetComponentInChildren<WeaponController>();
+        _weapon = gameObject.GetComponentInChildren<EnemyWeaponController>();
         if (_weapon == null)
-            Debug.LogWarning("Enemy: No weapon!");
+            Debug.Log("Enemy: No weapon!");
 
         _healthBar = gameObject.GetComponentInChildren<HealthBarController>();
         if (_healthBar == null)
-            Debug.LogWarning("Enemy: No health bar!");
+            Debug.Log("Enemy: No health bar!");
 
         // Find player
         _playerTransform = GameObject.FindWithTag("Player")?.transform;
         if (_playerTransform == null)
-            Debug.LogWarning("Enemy: No player entity was found!");
+            Debug.Log("Enemy: No player entity was found!");
 
         Health = 200;
         MaxHealth = 200;
@@ -84,7 +84,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         if (_playerTransform == null)
         {
-            Debug.Assert(false, "No player!");
+            Debug.Log(false + "No player!");
             return true;
         }
 

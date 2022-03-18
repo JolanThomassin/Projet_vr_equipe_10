@@ -14,7 +14,7 @@ public class PlayerWeaponController : MonoBehaviour
     private float _nextTimeToFire = 1.0f;
     private float _fireRate = 1.5f;
     private InputDevice _device;
-
+    public Transform weaponTransform;
     public GameObject projectile;
     
     
@@ -22,6 +22,9 @@ public class PlayerWeaponController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Start");
+
+        /*
         List<InputDevice> inputDevices = new List<InputDevice>();
         InputDeviceCharacteristics rigthChara = InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller;
         InputDevices.GetDevicesWithCharacteristics(rigthChara, inputDevices);
@@ -34,14 +37,14 @@ public class PlayerWeaponController : MonoBehaviour
         if (inputDevices.Count > 0)
         {
             _device = inputDevices[0];
-        }
+        }*/
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        _device.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue);
+       // _device.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue);
         
         if (Time.time >= _nextTimeToFire)
         {
@@ -59,10 +62,9 @@ public class PlayerWeaponController : MonoBehaviour
         {
             if (hit.collider.gameObject.CompareTag("Enemy"))
             {
-                Transform weaponTransform = this.transform;
-                GameObject bullet = (GameObject)Instantiate(projectile, weaponTransform);
-                bullet.GetComponent<Rigidbody>().velocity = hit.transform.position * 1f;
-                Debug.Log("Fireeeeee");
+                GameObject bullet = (GameObject)Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
+                bullet.GetComponent<Rigidbody>().velocity = (weaponTransform.transform.position - hit.transform.position) * -5f;
+                Debug.Log("Player : Fireeeeee " + bullet.name + weaponTransform);
             }
         }
     }

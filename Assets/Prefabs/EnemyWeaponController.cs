@@ -12,8 +12,8 @@ public class EnemyWeaponController : MonoBehaviour
     [SerializeField]
     private GameObject _projectile;
 
-    private float _fireRate = 1.0f;
-    private float _damage = 1.0f;
+    //private float _fireRate = 1.0f;
+    //private float _damage = 1.0f;
 
 
     // Start is called before the first frame update

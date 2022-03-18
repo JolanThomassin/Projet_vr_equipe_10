@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponController : MonoBehaviour
+public class EnemyWeaponController : MonoBehaviour
 {
     public float FireRange { get; set; }
 
     [SerializeField]
-    private Transform _projectileSpawn;
+    //private Transform _projectileSpawn;
 
-    [SerializeField]
-    private GameObject _projectile;
+    //[SerializeField]
+    //private GameObject _projectile;
 
-    private float _fireRate = 1.0f;
-    private float _damage = 1.0f;
+    //private float _fireRate = 1.0f;
+    //private float _damage = 1.0f;
 
 
     // Start is called before the first frame update

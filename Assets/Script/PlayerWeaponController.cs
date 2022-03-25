@@ -9,10 +9,8 @@ public class PlayerWeaponController : MonoBehaviour
     //private bool _canFire;
     //private bool _fireIsPressed;
     
-    private float _range = 50.0f;
-    //private float _damage = 10.0f;
     private float _nextTimeToFire = 1.0f;
-    private float _fireRate = 1.5f;
+    private float _fireRate = 1.5f; // Increase for faster fire rate
     private InputDevice _device;
     public Transform weaponTransform;
     public GameObject projectile;
@@ -28,22 +26,26 @@ public class PlayerWeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Store all of the device input
         List<InputDevice> inputDevices;
         if (_device != null)
         {
             inputDevices = new List<InputDevice>();
-            InputDeviceCharacteristics rigthChara = InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Right;
-            InputDevices.GetDevicesWithCharacteristics(rigthChara, inputDevices);
+            //Only get the right controller
+            InputDeviceCharacteristics rigthChara = InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Right; 
+            //Store it in the inputdevece List
+            InputDevices.GetDevicesWithCharacteristics(rigthChara, inputDevices); 
             foreach (var inputDevice in inputDevices)
             {
                 Debug.Log(inputDevice.name + inputDevice.characteristics);
             }
-
             if (inputDevices.Count > 0)
             {
+                //store the wanted device in a var
                 _device = inputDevices[0];
             }
 
+            //Get the trigger button, if pressed triggerPressed = true
             _device.TryGetFeatureValue(CommonUsages.triggerButton, out bool triggerPressed);
             
             if (Time.time >= _nextTimeToFire && triggerPressed)
@@ -59,16 +61,11 @@ public class PlayerWeaponController : MonoBehaviour
     }
     public void Fire()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, _range))
-        {
-            if (hit.collider.gameObject.CompareTag("Enemy"))
-            {
-                GameObject bullet = (GameObject)Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = (weaponTransform.transform.position - hit.transform.position) * -5f;
-                Debug.Log("Player : Fireeeeee " + bullet.name + weaponTransform);
-            }
-        }
+        //Creation of the bullet at the weapon transform
+        GameObject bullet = (GameObject)Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
+        //Add velocity to the projectil
+        bullet.GetComponent<Rigidbody>().velocity = (weaponTransform.forward) * -5f;
+        Debug.Log("Player : Fireeeeee " + bullet.name + weaponTransform);
     }
 
   

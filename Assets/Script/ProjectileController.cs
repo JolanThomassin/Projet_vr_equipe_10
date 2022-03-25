@@ -4,24 +4,25 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
+
+    private int _playerDamage = 50;
+    private int _enemyDamage = 10;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
 
         if(collision != null && !collision.gameObject.CompareTag("Weapon"))
         {
             Destroy(this.gameObject);
+        }
+
+        if(collision != null && !collision.gameObject.CompareTag("Ennemy"))
+        {
+            collision.gameObject.GetComponent<EnemyController>().Damage(_playerDamage);
+        }
+        if (collision != null && !collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerController>().Damage(_enemyDamage);
         }
     }
 }

@@ -15,6 +15,11 @@ public class EnemyController : MonoBehaviour, IDamageable
     // Player position
     private Transform _playerTransform;
 
+    public Transform weaponTransform;
+    public GameObject projectile;
+
+    private float _nextTimeToFire = 1.0f;
+    private float _fireRate = 1f;
     public int Health
     {
         // Health is stored in HealthBarController
@@ -73,7 +78,11 @@ public class EnemyController : MonoBehaviour, IDamageable
         }
         else
         {
-            Attack();
+            if (Time.time >= _nextTimeToFire)
+            {
+                _nextTimeToFire = Time.time + 1 / _fireRate;
+                Attack();
+            }
         }
 
         //Health = 0;
@@ -118,6 +127,11 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     void Attack()
     {
-        Debug.Log("Enemy: Shoot!");
+        GameObject bullet = (GameObject)Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
+        //Add velocity to the projectile
+        bullet.GetComponent<Rigidbody>().velocity = (weaponTransform.transform.position - _playerTransform.position) * -5f;
+        Debug.Log("Player : Fireeeeee " + bullet.name + weaponTransform);
     }
+
+    
 }

@@ -130,7 +130,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         GameObject bullet = (GameObject)Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
         //Add velocity to the projectile
         bullet.GetComponent<Rigidbody>().velocity = (weaponTransform.transform.position - _playerTransform.position) * -5f;
-        Debug.Log("Player : Fireeeeee " + bullet.name + weaponTransform);
+        Debug.Log("Enemy : Fireeeeee " + bullet.name + weaponTransform);
     }
 
     

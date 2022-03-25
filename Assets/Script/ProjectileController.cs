@@ -10,19 +10,22 @@ public class ProjectileController : MonoBehaviour
     // Start is called before the first frame update
     private void OnCollisionEnter(Collision collision)
     {
-
-        if(collision != null && !collision.gameObject.CompareTag("Weapon"))
+        if (collision != null && collision.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log(collision.gameObject.name);
+            collision.gameObject.GetComponent<EnemyController>().Damage(_playerDamage);
             Destroy(this.gameObject);
         }
-
-        if(collision != null && !collision.gameObject.CompareTag("Ennemy"))
+        else if (collision != null && collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<EnemyController>().Damage(_playerDamage);
-        }
-        if (collision != null && !collision.gameObject.CompareTag("Player"))
-        {
+            Debug.Log(collision.gameObject.name);
             collision.gameObject.GetComponent<PlayerController>().Damage(_enemyDamage);
+            Destroy(this.gameObject);
+        }
+        else if(!collision.gameObject.CompareTag("Weapon"))
+        {
+            Debug.Log(collision.gameObject.name);
+            Destroy(this.gameObject) ;
         }
     }
 }

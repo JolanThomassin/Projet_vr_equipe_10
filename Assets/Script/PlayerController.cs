@@ -6,7 +6,7 @@ using UnityEngine.XR;
 public class PlayerController : MonoBehaviour, IDamageable
 {
     private Quaternion _initRot;
-    private HealthBarController _healthBar;
+    public HealthBarController _healthBar;
 
     public int Health
     {
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         _healthBar = gameObject.GetComponentInChildren<HealthBarController>();
         if (_healthBar == null)
-            Debug.Log("Enemy: No health bar!");
+            Debug.Log("Player: No health bar!");
         _initRot = transform.rotation;
         
     }

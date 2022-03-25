@@ -64,7 +64,7 @@ public class PlayerWeaponController : MonoBehaviour
         //Creation of the bullet at the weapon transform
         GameObject bullet = (GameObject)Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
         //Add velocity to the projectil
-        bullet.GetComponent<Rigidbody>().velocity = (weaponTransform.forward) * -5f;
+        bullet.GetComponent<Rigidbody>().velocity = (weaponTransform.forward) * 100f;
         Debug.Log("Player : Fireeeeee " + bullet.name + weaponTransform);
     }
 

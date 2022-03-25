@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2949419439585727855}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6dfd1a2ef6b5ab48baea0fa2fa2804e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponTransform: {fileID: 1533081692388030834}
+  weaponTransform: {fileID: 7920983226384869697}
   projectile: {fileID: 5798650167092687318, guid: 8c2755d117dc8a049ac2e15125336bf5, type: 3}
 --- !u!65 &424586231046990867
 BoxCollider:
@@ -155,8 +155,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 1.0916414, y: 1.017391, z: 2.1047363}
+  m_Center: {x: 0.007481098, y: 0.5086955, z: 0.49580383}
 --- !u!1001 &145433219066325130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -208,19 +208,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3156797131366861884, guid: 80d6ea8378c6db947ac63edf3e03e628, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5007123967610776221, guid: 80d6ea8378c6db947ac63edf3e03e628, type: 3}
       propertyPath: m_Name
       value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 5007123967610776221, guid: 80d6ea8378c6db947ac63edf3e03e628, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Weapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80d6ea8378c6db947ac63edf3e03e628, type: 3}
 --- !u!4 &1533081692388030834 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1675962566994301432, guid: 80d6ea8378c6db947ac63edf3e03e628, type: 3}
+  m_PrefabInstance: {fileID: 145433219066325130}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7920983226384869697 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8063786362081509835, guid: 80d6ea8378c6db947ac63edf3e03e628, type: 3}
   m_PrefabInstance: {fileID: 145433219066325130}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4998029801222951533

@@ -10,7 +10,8 @@ public class ProjectileController : MonoBehaviour
     // Start is called before the first frame update
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision != null)
+
+        if(collision != null && !collision.gameObject.CompareTag("Weapon"))
         {
             Destroy(this.gameObject);
         }

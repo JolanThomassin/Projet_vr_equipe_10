@@ -18,7 +18,8 @@ public class ProjectileController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision != null)
+
+        if(collision != null && !collision.gameObject.CompareTag("Weapon"))
         {
             Destroy(this.gameObject);
         }

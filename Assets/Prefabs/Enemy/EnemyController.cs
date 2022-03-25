@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour, IDamageable
 {
-    private WeaponController _weapon;
+    private EnemyWeaponController _weapon;
     private HealthBarController _healthBar;
 
     private float _visionRange = 20.0f;
@@ -15,6 +15,11 @@ public class EnemyController : MonoBehaviour, IDamageable
     // Player position
     private Transform _playerTransform;
 
+    public Transform weaponTransform;
+    public GameObject projectile;
+
+    private float _nextTimeToFire = 1.0f;
+    private float _fireRate = 1f;
     public int Health
     {
         // Health is stored in HealthBarController
@@ -45,18 +50,18 @@ public class EnemyController : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        _weapon = gameObject.GetComponentInChildren<WeaponController>();
+        _weapon = gameObject.GetComponentInChildren<EnemyWeaponController>();
         if (_weapon == null)
-            Debug.LogWarning("Enemy: No weapon!");
+            Debug.Log("Enemy: No weapon!");
 
         _healthBar = gameObject.GetComponentInChildren<HealthBarController>();
         if (_healthBar == null)
-            Debug.LogWarning("Enemy: No health bar!");
+            Debug.Log("Enemy: No health bar!");
 
         // Find player
         _playerTransform = GameObject.FindWithTag("Player")?.transform;
         if (_playerTransform == null)
-            Debug.LogWarning("Enemy: No player entity was found!");
+            Debug.Log("Enemy: No player entity was found!");
 
         Health = 200;
         MaxHealth = 200;
@@ -73,7 +78,11 @@ public class EnemyController : MonoBehaviour, IDamageable
         }
         else
         {
-            Attack();
+            if (Time.time >= _nextTimeToFire)
+            {
+                _nextTimeToFire = Time.time + 1 / _fireRate;
+                Attack();
+            }
         }
 
         //Health = 0;
@@ -84,7 +93,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         if (_playerTransform == null)
         {
-            Debug.Assert(false, "No player!");
+            Debug.Log(false + "No player!");
             return true;
         }
 
@@ -118,6 +127,11 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     void Attack()
     {
-        Debug.Log("Enemy: Shoot!");
+        GameObject bullet = (GameObject)Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
+        //Add velocity to the projectile
+        bullet.GetComponent<Rigidbody>().velocity = (weaponTransform.transform.position - _playerTransform.position) * -5f;
+        Debug.Log("Player : Fireeeeee " + bullet.name + weaponTransform);
     }
+
+    
 }

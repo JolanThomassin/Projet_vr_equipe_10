@@ -14,6 +14,7 @@ public class PlayerWeaponController : MonoBehaviour
     private InputDevice _device;
     public Transform weaponTransform;
     public GameObject projectile;
+    public GameObject parameter;
     
     
 
@@ -53,6 +54,12 @@ public class PlayerWeaponController : MonoBehaviour
                 _nextTimeToFire = Time.time + 1/_fireRate;
                 Fire();
             }
+
+            _device.TryGetFeatureValue(CommonUsages.menuButton, out bool parameterPressed);
+            if(parameterPressed)
+            {
+                Parameter();
+            }
         }
 
     }
@@ -68,5 +75,18 @@ public class PlayerWeaponController : MonoBehaviour
         Debug.Log("Player : Fireeeeee " + bullet.name + weaponTransform);
     }
 
+    public void Parameter()
+    {
+        if(!parameter.activeSelf)
+        {
+            parameter.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            parameter.SetActive(false); 
+            Time.timeScale = 1;
+        }
+    }
   
 }

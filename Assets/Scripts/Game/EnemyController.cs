@@ -47,6 +47,13 @@ public class EnemyController : MonoBehaviour, IDamageable
     public int Damage(int amount)
     {
         Health -= amount;
+
+        if (Health <= 0)
+        {
+            Debug.Log("Dead");
+            Destroy(this.gameObject);
+        }
+
         return Health;
     }
 

@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
-
     private int _playerDamage = 50;
     private int _enemyDamage = 10;
-    // Start is called before the first frame update
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision != null && collision.gameObject.CompareTag("Enemy"))

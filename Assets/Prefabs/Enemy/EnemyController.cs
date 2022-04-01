@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour, IDamageable
 {
-    private EnemyWeaponController _weapon;
     private HealthBarController _healthBar;
 
     private float _visionRange = 20.0f;
@@ -15,11 +14,16 @@ public class EnemyController : MonoBehaviour, IDamageable
     // Player position
     private Transform _playerTransform;
 
-    public Transform weaponTransform;
-    public GameObject projectile;
+    [SerializeField]
+    private Transform _projectileSpawn;
+
+    [SerializeField]
+    private GameObject _projectile;
 
     private float _nextTimeToFire = 1.0f;
-    private float _fireRate = 1f;
+    private float _inversedFireRate = 1 / 1.0f;
+    private float _fireRange = 10.0f;
+
     public int Health
     {
         // Health is stored in HealthBarController
@@ -50,9 +54,9 @@ public class EnemyController : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        _weapon = gameObject.GetComponentInChildren<EnemyWeaponController>();
-        if (_weapon == null)
-            Debug.Log("Enemy: No weapon!");
+        //_weapon = gameObject.GetComponentInChildren<EnemyWeaponController>();
+        //if (_weapon == null)
+        //    Debug.Log("Enemy: No weapon!");
 
         _healthBar = gameObject.GetComponentInChildren<HealthBarController>();
         if (_healthBar == null)
@@ -80,13 +84,10 @@ public class EnemyController : MonoBehaviour, IDamageable
         {
             if (Time.time >= _nextTimeToFire)
             {
-                _nextTimeToFire = Time.time + 1 / _fireRate;
+                _nextTimeToFire = Time.time + _inversedFireRate;
                 Attack();
             }
         }
-
-        //Health = 0;
-        //Damage(1);
     }
 
     private bool CheckIsSeeking()
@@ -111,7 +112,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         {
             // Player is found: if the enemy is too far it still seeks for the player, otherwise it attacks
             float distance = Vector3.Distance(playerPosition, position);
-            return !(hitInfo.transform.CompareTag("Player") && distance <= _weapon.FireRange);
+            return !(hitInfo.transform.CompareTag("Player") && distance <= _fireRange);
         }
         else
         {
@@ -127,11 +128,9 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     void Attack()
     {
-        GameObject bullet = (GameObject)Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
-        //Add velocity to the projectile
-        bullet.GetComponent<Rigidbody>().velocity = (weaponTransform.transform.position - _playerTransform.position) * -5f;
-        Debug.Log("Enemy : Fireeeeee " + bullet.name + weaponTransform);
+        GameObject bullet = (GameObject)Instantiate(_projectile, _projectileSpawn.position, _projectileSpawn.rotation);
+        // Adds velocity to the projectile
+        bullet.GetComponent<Rigidbody>().velocity = (_projectileSpawn.position - _playerTransform.position) * -5f;
+        Debug.Log("Player : Fireeeeee " + bullet.name + _projectileSpawn);
     }
-
-    
 }

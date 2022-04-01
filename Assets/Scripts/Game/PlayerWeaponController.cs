@@ -14,6 +14,7 @@ public class PlayerWeaponController : MonoBehaviour
     private InputDevice _device;
     public Transform weaponTransform;
     public GameObject projectile;
+    public GameObject parameter;
     
     
 
@@ -53,6 +54,12 @@ public class PlayerWeaponController : MonoBehaviour
                 _nextTimeToFire = Time.time + 1/_fireRate;
                 Fire();
             }
+
+            _device.TryGetFeatureValue(CommonUsages.menuButton, out bool parameterPressed);
+            if(parameterPressed)
+            {
+                Parameter();
+            }
         }
 
     }
@@ -64,9 +71,22 @@ public class PlayerWeaponController : MonoBehaviour
         //Creation of the bullet at the weapon transform
         GameObject bullet = (GameObject)Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
         //Add velocity to the projectil
-        bullet.GetComponent<Rigidbody>().velocity = (weaponTransform.forward) * -5f;
+        bullet.GetComponent<Rigidbody>().velocity = (weaponTransform.forward) * 100f;
         Debug.Log("Player : Fireeeeee " + bullet.name + weaponTransform);
     }
 
+    public void Parameter()
+    {
+        if(!parameter.activeSelf)
+        {
+            parameter.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            parameter.SetActive(false); 
+            Time.timeScale = 1;
+        }
+    }
   
 }

@@ -6,8 +6,12 @@ using UnityEngine.XR;
 public class PlayerController : MonoBehaviour, IDamageable
 {
     private Quaternion _initRot;
-    private HealthBarController _healthBar;
+    public HealthBarController _healthBar;
+    private int _health = 250;
 
+    private GameObject _movementSys;
+    private GameObject _weapon;
+    public GameObject gameOver;
     public int Health
     {
         // Health is stored in HealthBarController
@@ -38,8 +42,12 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         _healthBar = gameObject.GetComponentInChildren<HealthBarController>();
         if (_healthBar == null)
-            Debug.Log("Enemy: No health bar!");
+            Debug.Log("Player: No health bar!");
         _initRot = transform.rotation;
+        _movementSys = GameObject.Find("Locomotion System");
+        _weapon = GameObject.Find("WeponPlayer");
+        Health = _health;
+        MaxHealth = _health;
         
     }
 
@@ -54,7 +62,22 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Update()
     {
 
+        Die();
+    }
 
+    public void Die()
+    {
+        if (_health <=0)
+        {
+            _movementSys.SetActive(false);
+            gameOver.SetActive(true);
+            _weapon.GetComponent<PlayerWeaponController>().enabled = false;
+            GameObject[] ennemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach(GameObject ennemi in ennemies)
+            {
+                ennemi.GetComponent<EnemyController>().enabled = false;
+            }
+        }
     }
 
     
